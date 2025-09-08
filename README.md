@@ -22,8 +22,8 @@ In your project’s `pom.xml`, declare this parent:
 <parent>
     <groupId>be.vives.advprog</groupId>
     <artifactId>parent</artifactId>
-    <version>1.0.1</version> <!-- use the latest release -->
-    <relativePath/> <!-- fetch from GitHub Packages -->
+    <version>1.0.1</version> 
+    <relativePath/> 
 </parent>
 ```
 Then you can add project-specific dependencies and plugins as needed.
@@ -58,8 +58,38 @@ git push origin main --tags
 
 ## Notes for Students
 
-You do not need to clone or install this repository locally.
+You don’t need to edit this parent POM yourself.  
+However, to be able to use it in your projects, Maven must know how to access the GitHub Packages repository where this POM is stored.  
+This requires a one-time configuration of your `settings.xml`.
 
-Simply reference the latest version in your project POM.
+### Step 1: Create or open your `settings.xml`
+In IntelliJ: Right click on a `pom.xml` file in your project > Maven > Create/Open settings.xml
+![createsettingsxml](images/createsettingsxml.png)
 
-Always check for the latest parent version before starting a new assignment to ensure your project uses the latest Java version and dependencies.
+By default, the settings.xml is located in your Maven home directory under `.m2/settings.xml`.
+
+### Step 2: Add your GitHub credentials
+Edit your `settings.xml` and add the following snippet inside the `<settings>` element:
+
+```xml
+<servers>
+  <server>
+    <id>github</id>
+    <username>YOUR_GITHUB_USERNAME</username>
+    <password>YOUR_PERSONAL_ACCESS_TOKEN</password>
+  </server>
+</servers>
+```
+
+Replace YOUR_GITHUB_USERNAME with your GitHub username.
+
+Replace YOUR_PERSONAL_ACCESS_TOKEN with a token you generated from GitHub:
+- Go to https://github.com/settings/tokens
+- Create a Personal Access Token (classic) with at least the **read:packages** scope.
+- Expiration: today + 1 year
+- Copy the token and use it as the password.
+
+⚠️ Keep your token secret — do not commit it to GitHub or share it with others.
+
+### Step 3: Verify
+Now, when you build a project that uses this parent POM, Maven will automatically download it from GitHub Packages.
