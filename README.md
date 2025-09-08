@@ -1,8 +1,3 @@
-# Advanced Programming Project Parent POM
-
-This project contains the Parent POM for all project in Advanced Programming managing common dependencies, plugins, and configurations across multiple Maven projects. 
-By using this parent POM, you can centralize version management and streamline the development process for all your Java projects.
-
 # VIVES AdvProg Parent POM
 
 ## Overview
@@ -14,7 +9,7 @@ It centralizes common configurations such as:
 - Shared testing dependencies (JUnit, AssertJ)  
 - Dependency management  
 
-Using this parent ensures that all projects follow the same standards and simplifies updates.  
+By using this parent POM, you can centralize version management, streamline the development process for all your Java projects, ensure consistent standards, and simplify updates.
 Whenever a new Java LTS or library version is released, you only need to update this parent POM, and all projects can benefit from the changes by updating the parent version.
 
 ---
