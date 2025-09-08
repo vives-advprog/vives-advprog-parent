@@ -54,7 +54,7 @@ git push origin main --tags
 
 4. GitHub Actions will automatically deploy the new version to GitHub Packages.
 
-Students can then use the new version in their projects by updating the <version> in their parent declaration.
+    Students can then use the new version in their projects by updating the `<version>` in their parent declaration.
 
 ## Notes for Students
 
