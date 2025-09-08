@@ -3,10 +3,10 @@ name: Publish Parent POM
 on:
   push:
     tags:
-      - 'v*.*.*'  # Alleen bij tags zoals v1.0.0, v1.0.1, etc.
+      - 'v*.*.*'  # Alleen bij tags zoals v1.0.0
 
 jobs:
-  build-and-publish:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,9 +19,9 @@ jobs:
           distribution: temurin
           java-version: 23
           server-id: github
+          server-username: ${{ github.actor }}
+          server-password: ${{ secrets.GITHUB_TOKEN }}
           settings-path: ${{ github.workspace }}
 
-      - name: Publish to GitHub Packages
-        run: mvn deploy
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Deploy to GitHub Packages
+        run: mvn deploy -X
