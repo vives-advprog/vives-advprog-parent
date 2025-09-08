@@ -2,9 +2,8 @@ name: Publish Parent POM
 
 on:
   push:
-    branches: [main]
-   # tags:
-    #  - 'v*.*.*'  # Alleen bij tags zoals v1.0.0
+    tags:
+      - 'v*.*.*'  # Alleen bij tags zoals v1.0.0
 
 jobs:
   deploy:
