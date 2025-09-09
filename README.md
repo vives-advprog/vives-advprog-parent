@@ -1,22 +1,35 @@
 # VIVES AdvProg Parent POM
 
-## Overview
-This repository contains the **parent Maven POM** for all Advanced Programming projects.
-It centralizes common configurations such as:
+## Het idee van een Parent POM in Maven
+In Advanced Programming is iedere oefening een afzonderlijk project, dit zijn heel wat projecten. Elk project heeft een pom.xml waarin staat hoe het project gebouwd wordt, welke dependencies het gebruikt, en hoe plugins geconfigureerd zijn.
 
-- Java version (currently set to Java 25)  
-- Compiler plugin configuration  
-- Shared testing dependencies (JUnit, AssertJ)  
-- Dependency management  
+Als je meerdere projecten hebt die op dezelfde manier gebouwd moeten worden of dezelfde dependencies en plugins gebruiken, kan je **duplicatie vermijden** door een **Parent POM** te gebruiken.
 
-By using this parent POM, you can centralize version management, streamline the development process for all your Java projects, ensure consistent standards, and simplify updates.
-Whenever a new Java LTS or library version is released, you only need to update this parent POM, and all projects can benefit from the changes by updating the parent version.
+## Wat is een Parent POM?
+Een **Parent POM** is een `pom.xml` dat als basis dient voor andere projecten. In de Parent POM definieer je bijvoorbeeld:
+- Versies van dependencies
+- Plugins en hun configuratie
+- Build instellingen
+- Properties (zoals Java-versie)
 
----
+Alle child-projecten die van deze Parent POM **erven** hoeven deze instellingen niet telkens opnieuw te bevatten.
 
-## How to Use in Your Project
+## Waarom gebruiken we een Parent POM?
+1. **Centralisatie**: Alles staat op één plek, dus wijzigingen zijn makkelijk door te voeren (door de vakdocenten).
+2. **Consistentie**: Alle projecten gebruiken dezelfde versies en instellingen.
+3. **Onderhoudbaarheid**: Minder duplicatie betekent minder kans op fouten.
 
-In your project’s `pom.xml`, declare this parent:
+## Advanced Programming Parent POM beschikbaar op GitHub Packages
+In ons geval willen we een geavanceerde Parent POM beschikbaar stellen via GitHub Packages. Dit betekent:
+
+1. De Parent POM staat in een GitHub repository: [vives-advprog-parent](https://github.com/vives-advprog/vives-advprog-parent)
+2. De POM wordt gepubliceerd als een artifact naar [GitHub Packages](https://github.com/orgs/vives-advprog/packages).
+3. Andere projecten kunnen deze artifact downloaden en gebruiken als Parent POM.
+
+## In alle Advanced Programming (child) projecten
+Je child-project hoeft de Parent POM dus niet zelf te bevatten; Maven haalt hem automatisch op uit GitHub Packages wanneer je het project build.
+
+Het enige wat het child-project moet toevoegen in zijn pom.xml is een verwijzing naar de parent POM:
 
 ```xml
 <parent>
@@ -26,25 +39,44 @@ In your project’s `pom.xml`, declare this parent:
     <relativePath/> 
 </parent>
 ```
-Then you can add project-specific dependencies and plugins as needed.
-The Java version, compiler settings, and common test libraries are automatically inherited.
+En waar het child-project deze parent POM kan vinden:
+
+```xml
+<repositories>
+    <repository>
+        <id>github</id>
+        <url>https://maven.pkg.github.com/vives-advprog/vives-advprog-parent</url>
+    </repository>
+</repositories>
+```
+
+Een voorbeeld van zo'n `pom.xml` bestand die verwijst naar de Advanced Programming Parent POM kan je terugvinden in het voorbeeldproject: [CinemaRoomReservation](https://github.com/vives-advprog/CinemaRoomReservation/blob/main/pom.xml)
 
 ---
 
-## Notes for Students
+## TODO als student: éénmalig settings.xml configureren
 
-You don’t need to edit this parent POM yourself.  
-However, to be able to use it in your projects, Maven must know how to access the GitHub Packages repository where this POM is stored.  
-This requires a one-time configuration of your `settings.xml`.
+Je hoeft deze parent POM niet zelf aan te passen.
 
-### Step 1: Create or open your `settings.xml`
-In IntelliJ: Right click on a `pom.xml` file in your project > Maven > Create/Open settings.xml
+Maar om hem in je projecten te kunnen gebruiken, moet Maven toegang hebben tot de Packages-repository waar deze POM is opgeslagen.
+
+Daarvoor is een éénmalige je `settings.xml` instellen met je GitHub gebruikersnaam en token
+
+### Stap 1: Clone
+Zorg dat je een project hebt die gebruik maakt van de Parent POM. Bv: [CinemaRoomReservation](https://github.com/vives-advprog/CinemaRoomReservation)
+
+Clone dit project en open het in IntelliJ
+
+### Stap 2: Create or open your `settings.xml`
+Klik in IntelliJ rechts op de `pom.xml` file van je project > Maven > Create/Open settings.xml
 ![createsettingsxml](images/createsettingsxml.png)
 
-By default, the settings.xml is located in your Maven home directory under `.m2/settings.xml`.
+In de `settings.xml` geef je je GitHub gebruikersnaam en een token op zodat Maven toegang heeft tot de Parent POM op GitHub Packages
 
-### Step 2: Add your GitHub credentials
-Edit your `settings.xml` and add the following snippet inside the `<settings>` element:
+Standaard bevindt het bestand `settings.xml` zich in je Maven-home directory onder `.m2/settings.xml`
+
+### Stap 3: GitHub credentials toevoegen
+Voeg het volgende fragment toe binnen het `<settings>`-element in je `settings.xml`
 
 ```xml
 <servers>
@@ -56,15 +88,16 @@ Edit your `settings.xml` and add the following snippet inside the `<settings>` e
 </servers>
 ```
 
-Replace YOUR_GITHUB_USERNAME with your GitHub username.
+Vervang YOUR_GITHUB_USERNAME met jouw GitHub username.
 
-Replace YOUR_PERSONAL_ACCESS_TOKEN with a token you generated from GitHub:
-- Go to https://github.com/settings/tokens
-- Create a Personal Access Token (classic) with at least the **read:packages** scope.
-- Expiration: today + 1 year
-- Copy the token and use it as the password.
+Vervang YOUR_PERSONAL_ACCESS_TOKEN door een token dat je hebt aangemaakt op GitHub:
+- Ga naar https://github.com/settings/tokens
+- Maak een **Personal Access Token (classic)** aan met minstens de **read:packages-scope**.
+- Expiration: vandaag + 1 jaar
+- Kopieer het token en gebruik het als <password> in je `settings.xml`
 
-⚠️ Keep your token secret — do not commit it to GitHub or share it with others.
+⚠️ Houd je token geheim — commit het niet naar GitHub en deel het niet met anderen.
 
-### Step 3: Verify
-Now, when you build a project that uses this parent POM, Maven will automatically download it from GitHub Packages.
+### Stap 4: Verifieer
+- Build het project via Maven Clean Package
+- Je krijgt een BUILD SUCCESS als alles correct ingesteld is
