@@ -1,4 +1,4 @@
-# VIVES AdvProg Parent POM
+# Advanced Programming Parent POM
 
 ## Het idee van een Parent POM in Maven
 In Advanced Programming is iedere oefening een afzonderlijk project, dit zijn heel wat projecten. Elk project heeft een pom.xml waarin staat hoe het project gebouwd wordt, welke dependencies het gebruikt, en hoe plugins geconfigureerd zijn.
