@@ -22,7 +22,7 @@ Alle child-projecten die van deze Parent POM **erven** hoeven deze instellingen 
 ## Advanced Programming Parent POM beschikbaar op GitHub Packages
 In ons geval willen we een geavanceerde Parent POM beschikbaar stellen via GitHub Packages. Dit betekent:
 
-1. De Parent POM staat in een GitHub repository: [vives-advprog-parent](https://github.com/vives-advprog/vives-advprog-parent)
+1. De Parent POM staat in een GitHub repository.
 2. De POM wordt gepubliceerd als een artifact naar [GitHub Packages](https://github.com/orgs/vives-advprog/packages).
 3. Andere projecten kunnen deze artifact downloaden en gebruiken als Parent POM.
 
@@ -50,30 +50,30 @@ En waar het child-project deze parent POM kan vinden:
 </repositories>
 ```
 
-Een voorbeeld van zo'n `pom.xml` bestand die verwijst naar de Advanced Programming Parent POM kan je terugvinden in het voorbeeldproject: [CinemaRoomReservation](https://github.com/vives-advprog/CinemaRoomReservation/blob/main/pom.xml)
+Een voorbeeld van zo'n `pom.xml` bestand die verwijst naar de Advanced Programming Parent POM kan je terugvinden in het voorbeeldproject: [pom.xml uit CinemaRoomReservation](https://github.com/vives-advprog/CinemaRoomReservation/blob/main/pom.xml).
 
 ---
 
-## TODO als student: éénmalig settings.xml configureren
+## TODO als student: **éénmalig** settings.xml configureren
 
-Je hoeft deze parent POM niet zelf aan te passen.
+Je hoeft deze parent POM niet zelf aan te passen of ernaar te verwijzen vanaf je eigen projecten.
 
 Maar om hem in je projecten te kunnen gebruiken, moet Maven toegang hebben tot de Packages-repository waar deze POM is opgeslagen.
 
-Daarvoor is een éénmalige je `settings.xml` instellen met je GitHub gebruikersnaam en token
+Daarvoor is een éénmalige je `settings.xml` instellen met je GitHub gebruikersnaam en token.
 
 ### Stap 1: Clone
-Zorg dat je een project hebt die gebruik maakt van de Parent POM. Bv: [CinemaRoomReservation](https://github.com/vives-advprog/CinemaRoomReservation)
+Zorg dat je een project hebt die gebruik maakt van de Parent POM. Bv: [CinemaRoomReservation](https://github.com/vives-advprog/CinemaRoomReservation).
 
-Clone dit project en open het in IntelliJ
+Clone dit project en open het in IntelliJ.
 
-### Stap 2: Create or open your `settings.xml`
+### Stap 2: Create or open `settings.xml`
 Klik in IntelliJ rechts op de `pom.xml` file van je project > Maven > Create/Open settings.xml
 ![createsettingsxml](images/createsettingsxml.png)
 
-In de `settings.xml` geef je je GitHub gebruikersnaam en een token op zodat Maven toegang heeft tot de Parent POM op GitHub Packages
+In de `settings.xml` geef je je GitHub gebruikersnaam en een token op zodat Maven toegang heeft tot de Parent POM op GitHub Packages.
 
-Standaard bevindt het bestand `settings.xml` zich in je Maven-home directory onder `.m2/settings.xml`
+Standaard bevindt het bestand `settings.xml` zich in je Maven-home directory onder `.m2/settings.xml`.
 
 ### Stap 3: GitHub credentials toevoegen
 Voeg het volgende fragment toe binnen het `<settings>`-element in je `settings.xml`
@@ -88,16 +88,17 @@ Voeg het volgende fragment toe binnen het `<settings>`-element in je `settings.x
 </servers>
 ```
 
-Vervang YOUR_GITHUB_USERNAME met jouw GitHub username.
+Vervang `YOUR_GITHUB_USERNAME` met jouw GitHub username.
 
-Vervang YOUR_PERSONAL_ACCESS_TOKEN door een token dat je hebt aangemaakt op GitHub:
+Vervang `YOUR_PERSONAL_ACCESS_TOKEN` door een token dat je hebt aangemaakt op GitHub:
 - Ga naar https://github.com/settings/tokens
+- Klik rechts boven op Generate a new token > **Generate a new token (classic)**
 - Maak een **Personal Access Token (classic)** aan met minstens de **read:packages-scope**.
 - Expiration: vandaag + 1 jaar
-- Kopieer het token en gebruik het als <password> in je `settings.xml`
+- Kopieer het token en gebruik het als `<password>` in je `settings.xml`
 
 ⚠️ Houd je token geheim — commit het niet naar GitHub en deel het niet met anderen.
 
 ### Stap 4: Verifieer
 - Build het project via Maven Clean Package
-- Je krijgt een BUILD SUCCESS als alles correct ingesteld is
+- Je krijgt een **BUILD SUCCESS** als alles correct ingesteld is
