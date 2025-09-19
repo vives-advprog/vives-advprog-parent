@@ -35,7 +35,7 @@ Het enige wat het child-project moet toevoegen in zijn pom.xml is een verwijzing
 <parent>
     <groupId>be.vives.advprog</groupId>
     <artifactId>parent</artifactId>
-    <version>1.0.1</version> 
+    <version>1.1.0-SNAPSHOT</version> 
     <relativePath/> 
 </parent>
 ```
