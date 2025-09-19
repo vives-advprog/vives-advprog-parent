@@ -2,8 +2,8 @@ name: Publish Parent POM
 
 on:
   push:
-    tags:
-      - 'v*.*.*'  # Alleen bij tags zoals v1.0.0
+    branches:
+      - main
 
 jobs:
   deploy:
@@ -18,7 +18,7 @@ jobs:
       - name: Set up Java
         uses: actions/setup-java@v4
         with:
-          java-version: 23
+          java-version: 25
           server-id: github
           distribution: temurin
 
